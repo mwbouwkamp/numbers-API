@@ -65,9 +65,6 @@ class Solver {
                 return check.toString();
             }
             else {
-                List<Integer> mult = new LinkedList<>();
-                List<Integer> min = new LinkedList<>();
-                List<Integer> div = new LinkedList<>();
                 for (int i = 0; i < check.getNumbers().size(); i++) {
                     for (int j = 0; j < check.getNumbers().size(); j++) {
                         if (i != j) {
