@@ -6,6 +6,9 @@ import javax.persistence.*;
 @Table(name = "numbers_levels")
 public class Level {
 
+    public static final int[] NUMBERS = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 25, 50, 75, 100};
+    public static final int NUMTILES = 6;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -79,5 +82,26 @@ public class Level {
             }
         }
         return false;
+    }
+
+    /**
+     * Returns the hand as an int[] based on the numbers
+     *
+     * @return      hand
+     */
+    public int[] getHand() {
+        int[] hand = new int[NUMTILES];
+        for (int i = 0; i < NUMTILES; i++) {
+            hand[i] = Integer.parseInt(numbers.substring(i * 3, (i + 1) * 3));
+        }
+        return hand;
+    }
+
+    /**
+     * Returns the goal based on the numbers
+     * @return
+     */
+    public int getGoal() {
+        return Integer.parseInt(numbers.substring(18));
     }
 }
