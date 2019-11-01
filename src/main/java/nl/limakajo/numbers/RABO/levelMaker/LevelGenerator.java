@@ -7,7 +7,8 @@ import java.util.Arrays;
 class LevelGenerator {
 
     /**
-     * Generates a random level
+     * Generates a random level with NUMTILES numbers (e.g., "001002003004005006007"),
+     * a default averageTime of 45000 and default timesPlayed of 1
      *
      * @return      random level
      */
@@ -25,7 +26,14 @@ class LevelGenerator {
         return new Level(levelNumbers, 45000, 1);
     }
 
-    private static StringBuilder addNumberToStringBuilder(StringBuilder stringBuilder, int number) {
+    /**
+     * Adds number is "###" format to StringBuilder
+     *
+     * @param stringBuilder     StringBuilder to add to
+     * @param number            number to add
+     * @return                  adapted StringBuilder
+     */
+    public static StringBuilder addNumberToStringBuilder(StringBuilder stringBuilder, int number) {
         for (int i = 0; i < getNumberLeadingZeros(number); i++) {
             stringBuilder.append("0");
         }
@@ -33,6 +41,12 @@ class LevelGenerator {
         return stringBuilder;
     }
 
+    /**
+     * Calculate the number of zero's that need to be added (leading zero's) to convert a number to "###" format
+     *
+     * @param number    number to consider
+     * @return          number of zero's to add
+     */
     static int getNumberLeadingZeros(int number) {
         int numberLeadingZeros = 0;
         while (number / 10 > 0) {

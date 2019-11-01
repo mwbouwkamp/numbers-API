@@ -13,12 +13,17 @@ import java.net.URL;
 
 public class Main {
 
-    public static void main(String[] args) {
-        LevelCollection levelCollection = new LevelCollection();
-        for (int i = 0; i < 10; i++) {
-            levelCollection.addValidLevel();
-        }
+    private static LevelCollection levelCollection;
 
+    public static void main(String[] args) {
+        generateLevels();
+        postLevels();
+    }
+
+    /**
+     * Post levels through the API
+     */
+    private static void postLevels() {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         try {
             HttpPost request = new HttpPost("http://localhost:8080/api/levels");
@@ -42,7 +47,15 @@ public class Main {
                 e.printStackTrace();
             }
         }
+    }
 
-
+    /**
+     * Generate list of Levels
+     */
+    private static void generateLevels() {
+        levelCollection = new LevelCollection();
+        for (int i = 0; i < 10; i++) {
+            levelCollection.addValidLevel();
+        }
     }
 }
