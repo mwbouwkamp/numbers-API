@@ -49,7 +49,6 @@ class Solver {
      * @return          a String representation of the solution or null if no solution is available
      */
     static String solvableLevel(Level level) {
-//        System.out.println("LEVEL: " + level);
         queue = new ArrayList<>();
         State current = new State(
                 Arrays.stream(level.convertNumbersToHand()).boxed().collect(Collectors.toList()),
@@ -57,7 +56,6 @@ class Solver {
         queue.add(current);
         while (queue.size() > 0) {
             State check = queue.remove(queue.size() - 1);
-//            System.out.println("CHECK: " + check);
             if (goalReached(level, check)) {
                 return check.toString();
             }

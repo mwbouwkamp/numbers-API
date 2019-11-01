@@ -102,6 +102,6 @@ public class Level {
      * @return
      */
     public int getGoal() {
-        return Integer.parseInt(numbers.substring(18));
+        return Integer.parseInt(numbers.substring(3 * NUMTILES, 3 * NUMTILES + 3));
     }
 }
