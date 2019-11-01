@@ -7,7 +7,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 class NumbersApiApplicationTests {
 
 	@Test
-	void contextLoads() {
+	void loadOriginalData() {
+
 	}
 
 }
