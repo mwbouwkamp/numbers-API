@@ -89,7 +89,7 @@ public class Level {
      *
      * @return      hand
      */
-    public int[] getHand() {
+    public int[] convertNumbersToHand() {
         int[] hand = new int[NUMTILES];
         for (int i = 0; i < NUMTILES; i++) {
             hand[i] = Integer.parseInt(numbers.substring(i * 3, (i + 1) * 3));

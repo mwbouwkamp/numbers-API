@@ -52,8 +52,8 @@ class Solver {
 //        System.out.println("LEVEL: " + level);
         queue = new ArrayList<>();
         State current = new State(
-                Arrays.stream(level.getHand()).boxed().collect(Collectors.toList()),
-                Arrays.stream(level.getHand()).boxed().map(String::valueOf).collect(Collectors.toList()));
+                Arrays.stream(level.convertNumbersToHand()).boxed().collect(Collectors.toList()),
+                Arrays.stream(level.convertNumbersToHand()).boxed().map(String::valueOf).collect(Collectors.toList()));
         queue.add(current);
         while (queue.size() > 0) {
             State check = queue.remove(queue.size() - 1);
