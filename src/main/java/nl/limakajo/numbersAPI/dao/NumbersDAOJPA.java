@@ -60,6 +60,8 @@ public class NumbersDAOJPA implements NumbersDAO {
     @Override
     @Transactional
     public void updateLevel(Level level) {
+        Level current = getLevelByNumbers(level.getNumbers());
+        level.setId(current.getId());
         entityManager.merge(level);
     }
 

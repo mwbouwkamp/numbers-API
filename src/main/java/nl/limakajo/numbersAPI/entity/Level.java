@@ -60,4 +60,24 @@ public class Level {
     public void setTimesPlayed(int timesPlayed) {
         this.timesPlayed = timesPlayed;
     }
+
+    @Override
+    public String toString() {
+        return "Level{" +
+                "numbers='" + numbers + '\'' +
+                ", averageTime=" + averageTime +
+                ", timesPlayed=" + timesPlayed +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Level) {
+            Level level = (Level) obj;
+            if (this.numbers == level.getNumbers()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

@@ -11,11 +11,11 @@ import java.util.List;
 @RequestMapping("/api")
 public class LevelRestController {
 
+    @Autowired
     private NumbersServiceJPA numbersService;
 
-    @Autowired
-    public LevelRestController(NumbersServiceJPA numbersServiceJPA) {
-        this.numbersService = numbersServiceJPA;
+    public LevelRestController(NumbersServiceJPA numbersService) {
+        this.numbersService = numbersService;
     }
 
     @GetMapping("/levels")
@@ -24,7 +24,7 @@ public class LevelRestController {
     }
 
     @GetMapping("levels/{levelNumbers}")
-    public Level getLevelById(@PathVariable("levelNumbers") String levelNumbers) {
+    public Level getLevelByNumbers(@PathVariable("levelNumbers") String levelNumbers) {
         Level level = numbersService.getLevelByNumbers(levelNumbers);
         if (null == level) {
             throw new RuntimeException("Level with numbers " + levelNumbers + " not found");
