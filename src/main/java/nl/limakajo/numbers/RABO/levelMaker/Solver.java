@@ -2,10 +2,7 @@ package nl.limakajo.numbers.RABO.levelMaker;
 
 import nl.limakajo.numbers.RABO.API.entity.Level;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -54,8 +51,13 @@ class Solver {
     static String solvableLevel(Level level) {
         queue = new ArrayList<>();
         State current = new State(
-                Arrays.stream(level.convertNumbersToHand()).boxed().collect(Collectors.toList()),
-                Arrays.stream(level.convertNumbersToHand()).boxed().map(String::valueOf).collect(Collectors.toList()));
+                Arrays.stream(level.convertNumbersToHand())
+                        .boxed()
+                        .collect(Collectors.toList()),
+                Arrays.stream(level.convertNumbersToHand())
+                        .boxed()
+                        .map(String::valueOf)
+                        .collect(Collectors.toList()));
         queue.add(current);
         while (queue.size() > 0) {
             State check = queue.remove(queue.size() - 1);
@@ -70,16 +72,16 @@ class Solver {
                     for (int j = 0; j < check.getNumbers().size(); j++) {
                         if (i != j) {
                             if (i < j) { // By definition a + b = b + a, so we only need to perform this addition once
-                                doOperation(check, i, j, '+');
+                                doOperation(check, i, j, '+').ifPresent(queue::add);
                             }
                             if (i < j || check.getNumber(i) == 1 && check.getNumber(j) != 1) { // By definition a + b = b + a, so we only need to perform this multiplication once; also, when 1 is involved, multiplication is redundant
-                                doOperation(check, i, j, '*');
+                                doOperation(check, i, j, '*').ifPresent(queue::add);
                             }
                             if (check.getNumber(i) > check.getNumber(j)) { // Substraction only needs to be performed if a > b
-                                doOperation(check, i, j, '-');
+                                doOperation(check, i, j, '-').ifPresent(queue::add);
                             }
                             if (check.getNumber(i) % check.getNumber(j) == 0 && check.getNumber(i) != 1 && check.getNumber(j) != 1) { // Division only needs to be perormed if a % b = 0; also, when 1 is involved, division is redundant
-                                doOperation(check, i, j, '/');
+                                doOperation(check, i, j, '/').ifPresent(queue::add);
                             }
                         }
                     }
@@ -96,8 +98,9 @@ class Solver {
      * @param index1        first index (representing first tile for the operation)
      * @param index2        second index (representing second tile for the operation)
      * @param operator      the type of operation to perform
+     * @return              optional with the state to add or null
      */
-    private static void doOperation(State check, int index1, int index2, char operator) {
+    private static Optional<State> doOperation(State check, int index1, int index2, char operator) {
         int valOne = check.getNumber(index1);
         String stringOne = check.getString(index1);
         int valTwo = check.getNumber(index2);
@@ -130,8 +133,9 @@ class Solver {
                 newNumbers.add(number);
                 newString.add(String.valueOf(number));
             }
-            queue.add(new State(newNumbers, newString));
+            return Optional.ofNullable(new State(newNumbers, newString));
         }
+        return Optional.empty();
     }
 
 

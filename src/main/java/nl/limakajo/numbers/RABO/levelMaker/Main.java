@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import static nl.limakajo.numbers.RABO.API.entity.Level.NUMTILES;
+
 public class Main {
 
     private static LevelCollection levelCollection;
