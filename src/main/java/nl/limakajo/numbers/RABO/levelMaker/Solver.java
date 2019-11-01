@@ -98,7 +98,7 @@ class Solver {
      * @param index1        first index (representing first tile for the operation)
      * @param index2        second index (representing second tile for the operation)
      * @param operator      the type of operation to perform
-     * @return              optional with the state to add or null
+     * @return              optional with the state to add or empty
      */
     private static Optional<State> doOperation(State check, int index1, int index2, char operator) {
         int valOne = check.getNumber(index1);
