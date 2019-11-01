@@ -40,6 +40,10 @@ public class LevelRestController {
 
     @PutMapping("/levels")
     public void updateLevel(@RequestBody Level level) {
+        Level currentLevel = numbersService.getLevelByNumbers(level.getNumbers());
+        if (null == currentLevel) {
+            throw new RuntimeException("Level with numbers " + level.getNumbers() + " not found");
+        }
         numbersService.updateLevel(level);
     }
 
