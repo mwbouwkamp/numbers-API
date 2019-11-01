@@ -2,6 +2,8 @@ package nl.limakajo.numbers.RABO.levelMaker;
 
 import nl.limakajo.numbers.RABO.API.entity.Level;
 
+import java.util.Arrays;
+
 class LevelGenerator {
 
     /**
@@ -33,10 +35,10 @@ class LevelGenerator {
 
     static int getNumberLeadingZeros(int number) {
         int numberLeadingZeros = 0;
-        while (number / 10 > 1) {
+        while (number / 10 > 0) {
             numberLeadingZeros++;
             number /= 10;
         }
-        return numberLeadingZeros;
+        return 2 - numberLeadingZeros;
     }
 }

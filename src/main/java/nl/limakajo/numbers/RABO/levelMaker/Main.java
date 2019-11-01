@@ -1,10 +1,15 @@
 package nl.limakajo.numbers.RABO.levelMaker;
 
 import nl.limakajo.numbers.RABO.API.entity.Level;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.JSONObject;
 
-import java.io.BufferedWriter;
-import java.io.FileWriter;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 public class Main {
 
@@ -13,40 +18,31 @@ public class Main {
         for (int i = 0; i < 10; i++) {
             levelCollection.addValidLevel();
         }
-        BufferedWriter writer;
+
+        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         try {
-            writer = new BufferedWriter(new FileWriter("query.txt"));
-            StringBuilder queryBuilder = new StringBuilder("INSERT INTO leveldata (numbers, averagetime, timesplayed) VALUES ");
-            for (int i = 0; i < levelCollection.size(); i++) {
+            HttpPost request = new HttpPost("http://localhost:8080/api/levels");
+            for (int i = 0; i < 10; i++) {
                 Level level = levelCollection.getLevel(i);
-                String solution = levelCollection.getSolution(i);
-                writer.write("\n---" + i + "---");
-                writer.write("\nLEVEL    : " + level);
-                writer.write("\nSOLUTION : " + solution + " (targetTime: " + calculateTargetTime(solution) + ")");
-
-                addLevelToQueryBuilder(queryBuilder, level, calculateTargetTime(solution));
+                JSONObject json = new JSONObject()
+                        .put("numbers", level.getNumbers())
+                        .put("averageTime", level.getAverageTime())
+                        .put("timesPlayed", 1);
+                StringEntity params = new StringEntity(json.toString());
+                request.addHeader("content-type", "application/json");
+                request.setEntity(params);
+                httpClient.execute(request);
             }
-            String query = queryBuilder.toString().substring(0, queryBuilder.length() - 2) + ";";
-            writer.write("\n");
-            writer.write("\n---QUERY---\n" + query);
-            writer.close();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                httpClient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-    }
 
-    private static void addLevelToQueryBuilder(StringBuilder queryBuilder, Level level, int targetTime) {
-        queryBuilder
-                .append("(")
-                .append(level)
-                .append(", ")
-                .append(targetTime)
-                .append(", ")
-                .append(1)
-                .append("), ");
-    }
 
-    private static int calculateTargetTime(String solution) {
-        return (int) solution.chars().filter(c -> c == '[' || c == ',').count() * 1_000 + 40_000;
     }
 }
