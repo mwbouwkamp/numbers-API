@@ -1,6 +1,6 @@
-package nl.limakajo.numbersAPI.dao;
+package nl.limakajo.numbers.RABO.API.dao;
 
-import nl.limakajo.numbersAPI.entity.Level;
+import nl.limakajo.numbers.RABO.API.entity.Level;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInstance;

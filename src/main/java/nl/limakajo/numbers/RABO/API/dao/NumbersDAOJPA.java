@@ -1,6 +1,6 @@
-package nl.limakajo.numbersAPI.dao;
+package nl.limakajo.numbers.RABO.API.dao;
 
-import nl.limakajo.numbersAPI.entity.Level;
+import nl.limakajo.numbers.RABO.API.entity.Level;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

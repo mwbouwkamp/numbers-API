@@ -1,4 +1,4 @@
-package nl.limakajo.numbersAPI.entity;
+package nl.limakajo.numbers.RABO.API.entity;
 
 import javax.persistence.*;
 

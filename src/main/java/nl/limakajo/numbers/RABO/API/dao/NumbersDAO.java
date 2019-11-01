@@ -1,10 +1,10 @@
-package nl.limakajo.numbersAPI.service;
+package nl.limakajo.numbers.RABO.API.dao;
 
-import nl.limakajo.numbersAPI.entity.Level;
+import nl.limakajo.numbers.RABO.API.entity.Level;
 
 import java.util.List;
 
-public interface NumbersService {
+public interface NumbersDAO {
 
     /**
      * Retrieves a List of Levels from the database
@@ -16,8 +16,8 @@ public interface NumbersService {
     /**
      * Retrieves a single Level based on numbers
      *
-     * @param numbers       String representation of the numbers
-     * @return              Level
+     * @param numbers   representation of the numbers
+     * @return          Level
      */
     public Level getLevelByNumbers(String numbers);
 
@@ -49,6 +49,5 @@ public interface NumbersService {
      * @param id     The Level to delete from the database
      */
     public void deleteLevel(int id);
-
 
 }

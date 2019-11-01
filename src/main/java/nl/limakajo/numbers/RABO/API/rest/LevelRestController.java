@@ -1,7 +1,7 @@
-package nl.limakajo.numbersAPI.rest;
+package nl.limakajo.numbers.RABO.API.rest;
 
-import nl.limakajo.numbersAPI.entity.Level;
-import nl.limakajo.numbersAPI.service.NumbersServiceJPA;
+import nl.limakajo.numbers.RABO.API.entity.Level;
+import nl.limakajo.numbers.RABO.API.service.NumbersServiceJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

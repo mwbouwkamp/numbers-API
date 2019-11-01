@@ -1,7 +1,7 @@
-package nl.limakajo.numbersAPI.service;
+package nl.limakajo.numbers.RABO.API.service;
 
-import nl.limakajo.numbersAPI.dao.NumbersDAOJPA;
-import nl.limakajo.numbersAPI.entity.Level;
+import nl.limakajo.numbers.RABO.API.entity.Level;
+import nl.limakajo.numbers.RABO.API.dao.NumbersDAOJPA;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,10 +1,8 @@
-package nl.limakajo.numbersAPI;
+package nl.limakajo.numbers.RABO.API;
 
-import nl.limakajo.numbersAPI.entity.Level;
-import nl.limakajo.numbersAPI.rest.LevelRestController;
-import nl.limakajo.numbersAPI.service.NumbersServiceJPA;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
+import nl.limakajo.numbers.RABO.API.entity.Level;
+import nl.limakajo.numbers.RABO.API.service.NumbersServiceJPA;
+import nl.limakajo.numbers.RABO.API.rest.LevelRestController;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
