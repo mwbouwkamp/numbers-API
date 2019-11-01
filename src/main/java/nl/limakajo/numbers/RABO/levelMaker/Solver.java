@@ -13,6 +13,9 @@ class Solver {
 
     private static List<State> queue;
 
+    /**
+     * Private class to hold a state to consider
+     */
     private static class State {
         List<Integer> numbers;
         List<String> stringRep;
@@ -86,11 +89,19 @@ class Solver {
         return null;
     }
 
-    private static void doOperation(State check, int i, int j, char operator) {
-        int valOne = check.getNumber(i);
-        String stringOne = check.getString(i);
-        int valTwo = check.getNumber(j);
-        String stringTwo = check.getString(j);
+    /**
+     * Performs an operation on two numbers in a state
+     *
+     * @param check         State to check
+     * @param index1        first index (representing first tile for the operation)
+     * @param index2        second index (representing second tile for the operation)
+     * @param operator      the type of operation to perform
+     */
+    private static void doOperation(State check, int index1, int index2, char operator) {
+        int valOne = check.getNumber(index1);
+        String stringOne = check.getString(index1);
+        int valTwo = check.getNumber(index2);
+        String stringTwo = check.getString(index2);
         int result;
         switch (operator) {
             case '+':
@@ -111,7 +122,7 @@ class Solver {
         if (result <= MAXVALUE && result >= 0) {
             List<Integer> newNumbers = new LinkedList<>();
             List<String> newString = new LinkedList<>();
-            List<Integer> remainingNumbers = getRemainingNumbers(check, i, j);
+            List<Integer> remainingNumbers = getRemainingNumbers(check, index1, index2);
 
             newNumbers.add(result);
             newString.add("[" + stringOne + operator + stringTwo + "]");
@@ -120,18 +131,32 @@ class Solver {
                 newString.add(String.valueOf(number));
             }
             queue.add(new State(newNumbers, newString));
-//            System.out.println("ADDED: " + newString +  "....." + newNumbers.toString());
         }
     }
 
 
+    /**
+     * Checks if the goal, defined in Level, can be by adding the remaining numbers
+     *
+     * @param level     Level to complete
+     * @param check     State to consider
+     * @return          true if level can be solved by adding remaining numbers
+     */
     private static boolean goalReached(Level level, State check) {
         return check.getNumbers().stream().mapToInt(Integer::intValue).sum() == level.getGoal();
     }
 
-    private static List<Integer> getRemainingNumbers(State check, int i, int j) {
+    /**
+     * Get the remaining numbers when taking into account that two numbers (represented by index1 and index2) are removed
+     *
+     * @param check     current State
+     * @param index1    index of first number that no longer needs to be taken into account
+     * @param index2    index of second number that no longer needs to be taken into account
+     * @return          remaining numbers
+     */
+    private static List<Integer> getRemainingNumbers(State check, int index1, int index2) {
         return IntStream.range(0, check.getNumbers().size())
-                .filter(n -> n != i && n != j)
+                .filter(n -> n != index1 && n != index2)
                 .map(check::getNumber)
                 .boxed()
                 .collect(Collectors.toList());
