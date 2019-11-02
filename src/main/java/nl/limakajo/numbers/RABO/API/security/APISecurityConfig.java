@@ -14,9 +14,9 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     protected void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-                .withUser("admin").password("{noop}admin").roles("USER", "ADMIN")
+                .withUser("admin").password("{bcrypt}$2a$10$k4/7UdadGtTAw.JGUiJ4E.N.pIXGJiHOIy33gwT5WQDWJDiPIvjTG").roles("USER", "ADMIN")
                 .and()
-                .withUser("user").password("{noop}user").roles("USER");
+                .withUser("user").password("{bcrypt}$2a$10$m/01n1RdxOWO9Q0rYG1sHOtE7.4.sRAnLztYV4HUwIzNOabZqF3cK").roles("USER");
     }
 
     @Override
@@ -25,14 +25,16 @@ public class APISecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic()
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.GET, "/api/levels/*").hasRole("USER")
-                .antMatchers(HttpMethod.GET, "/api/levels/closest/*").hasRole("ADMIN")
-                .antMatchers(HttpMethod.POST, "/api/levels").hasRole("ADMIN")
-                .antMatchers(HttpMethod.PUT, "/api/levels").hasRole("ADMIN")
-                .antMatchers(HttpMethod.DELETE, "/api/levels/*").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.GET, "/api/levels/*").hasRole("USER")
+                    .antMatchers(HttpMethod.GET, "/api/levels/closest/*").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.POST, "/api/levels").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.PUT, "/api/levels").hasRole("ADMIN")
+                    .antMatchers(HttpMethod.DELETE, "/api/levels/*").hasRole("ADMIN")
                 .and()
-                .csrf().disable()
-                .formLogin().disable();
+                .csrf()
+                    .disable()
+                .formLogin()
+                    .disable();
     }
 
 }
