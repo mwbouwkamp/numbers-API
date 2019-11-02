@@ -59,6 +59,10 @@ public class LevelCollection {
         return levels.get(i);
     }
 
+    List<Level> getLevels() {
+        return levels;
+    }
+
     String getSolution(int i) {
         return solutions.get(i);
     }

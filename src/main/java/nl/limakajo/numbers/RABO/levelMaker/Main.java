@@ -26,8 +26,8 @@ public class Main {
 
     public static void main(String[] args) {
         deleteExistingLevels();
-        generateLevels();
-        postLevels();
+        LevelCollection levelCollection = generateLevels();
+        postLevels(levelCollection.getLevels());
     }
 
     /**
@@ -80,12 +80,11 @@ public class Main {
     /**
      * Post levels through the API
      */
-    private static void postLevels() {
+    private static void postLevels(List<Level> levels) {
         CloseableHttpClient httpClient = HttpClientBuilder.create().build();
         HttpPost request = new HttpPost("http://localhost:8080/api/levels");
         try {
-            for (int i = 0; i < 10; i++) {
-                Level level = levelCollection.getLevel(i);
+            for (Level level: levels) {
                 JSONObject json = new JSONObject()
                         .put("numbers", level.getNumbers())
                         .put("averageTime", level.getAverageTime())
@@ -109,10 +108,11 @@ public class Main {
     /**
      * Generate list of Levels
      */
-    private static void generateLevels() {
+    private static LevelCollection generateLevels() {
         levelCollection = new LevelCollection();
         for (int i = 0; i < 10; i++) {
             levelCollection.addValidLevel();
         }
+        return levelCollection;
     }
 }
