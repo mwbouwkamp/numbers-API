@@ -4,11 +4,15 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import nl.limakajo.numbers.RABO.API.entity.Level;
 import org.apache.http.HttpEntity;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.json.JSONObject;
@@ -23,8 +27,13 @@ import java.util.List;
 public class Main {
 
     private static LevelCollection levelCollection;
+    private static CredentialsProvider credsProvider;
 
     public static void main(String[] args) {
+        credsProvider = new BasicCredentialsProvider();
+        credsProvider.setCredentials(
+                new AuthScope("localhost", 8080),
+                new UsernamePasswordCredentials("admin", "admin"));
         deleteExistingLevels();
         LevelCollection levelCollection = generateLevels();
         postLevels(levelCollection.getLevels());
@@ -49,6 +58,7 @@ public class Main {
         try {
             CloseableHttpResponse response = HttpClientBuilder
                     .create()
+                    .setDefaultCredentialsProvider(credsProvider)
                     .build()
                     .execute(new HttpDelete("http://localhost:8080/api/levels/" + level.getNumbers()));
         } catch (IOException e) {
@@ -64,6 +74,7 @@ public class Main {
         try {
             CloseableHttpResponse response = HttpClientBuilder
                     .create()
+                    .setDefaultCredentialsProvider(credsProvider)
                     .build()
                     .execute(new HttpGet("http://localhost:8080/api/levels"));
             HttpEntity entity = response.getEntity();
@@ -81,7 +92,9 @@ public class Main {
      * Post levels through the API
      */
     private static void postLevels(List<Level> levels) {
-        CloseableHttpClient httpClient = HttpClientBuilder.create().build();
+        CloseableHttpClient httpClient = HttpClientBuilder.create()
+                .setDefaultCredentialsProvider(credsProvider)
+                .build();
         HttpPost request = new HttpPost("http://localhost:8080/api/levels");
         try {
             for (Level level: levels) {
