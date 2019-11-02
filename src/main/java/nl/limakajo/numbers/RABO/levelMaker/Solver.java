@@ -144,7 +144,9 @@ class Solver {
      * @return          true if level can be solved by adding remaining numbers
      */
     private static boolean goalReached(Level level, State check) {
-        return check.getNumbers().stream().mapToInt(Integer::intValue).sum() == level.getGoal();
+        return check.getNumbers().stream()
+                .mapToInt(Integer::intValue)
+                .sum() == level.extractGoal();
     }
 
     /**

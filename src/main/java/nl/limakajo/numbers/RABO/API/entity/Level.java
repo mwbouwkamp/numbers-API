@@ -101,7 +101,7 @@ public class Level {
      * Returns the goal based on the numbers
      * @return
      */
-    public int getGoal() {
+    public int extractGoal() {
         return Integer.parseInt(numbers.substring(3 * NUMTILES, 3 * NUMTILES + 3));
     }
 }
